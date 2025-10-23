@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/MiniGame_Flappy.unity
+    guid: 4b1ca9e17dc80954e82b8c61d71af0fa
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 1e80e94448369f34884153c83093ca7f, type: 3}

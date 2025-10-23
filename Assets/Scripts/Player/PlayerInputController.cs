@@ -1,32 +1,39 @@
-using System.Windows.Input;
-using UnityEditor.Timeline.Actions;
-using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerInputController : MonoBehaviour
 {
     private PlayerInput input;
-    private Vector2 moveInput;
-    private Rigidbody2D rigidbody2d;
-    public float speed = 5f;
+    private PlayerStateMachine stateMachine;
 
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
-        rigidbody2d = GetComponent<Rigidbody2D>();
+        stateMachine = GetComponent<PlayerStateMachine>();
     }
 
-    private void Update()
-    {
-        if (moveInput == Vector2.zero) return;
-        Vector2 newPos = rigidbody2d.position + moveInput * speed * Time.fixedDeltaTime;
-        GetComponent<Rigidbody2D>().MovePosition(newPos);
-
-    }
-
+    // InputSystem Event - Move
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
+        Vector2 move = context.ReadValue<Vector2>();
+        if (context.performed || context.canceled)
+            stateMachine.HandleMove(move);
+    }
+
+    // InputSystem Event - Jump
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            stateMachine.HandleJump();
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        Debug.Log("Input Interact");
+        if (context.performed && InteractDetector.CurrentZone != null)
+        {
+            InteractDetector.CurrentZone.TryInteract();
+        }
     }
 }
