@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class InteractDetector : MonoBehaviour
 {
-    public static InteractZone CurrentZone { get; private set; }
+    public static IInteractable CurrentInteractable { get; private set; }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent(out InteractZone zone))
+        if (other.TryGetComponent(out IInteractable interactable))
         {
-            CurrentZone = zone;
-            Debug.Log(CurrentZone.name);
-            zone.OnPlayerEnter();
+            CurrentInteractable = interactable;
+            interactable.OnPlayerEnter();
+            Debug.Log($"Enter: {interactable.Type}");
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.TryGetComponent(out InteractZone zone) && zone == CurrentZone)
+        if (other.TryGetComponent(out IInteractable interactable) &&
+            interactable == CurrentInteractable)
         {
-            zone.OnPlayerExit();
-            CurrentZone = null;
+            interactable.OnPlayerExit();
+            CurrentInteractable = null;
         }
     }
 }

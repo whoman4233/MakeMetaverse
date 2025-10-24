@@ -31,9 +31,9 @@ public class PlayerInputController : MonoBehaviour
     public void OnInteract(InputAction.CallbackContext context)
     {
         Debug.Log("Input Interact");
-        if (context.performed && InteractDetector.CurrentZone != null)
+        if (context.performed && InteractDetector.CurrentInteractable != null)
         {
-            InteractDetector.CurrentZone.TryInteract();
+            InteractDetector.CurrentInteractable.TryInteract();
         }
     }
 }

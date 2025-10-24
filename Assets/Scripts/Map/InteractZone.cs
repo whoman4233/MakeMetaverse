@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractZone : MonoBehaviour
+public class InteractZone : MonoBehaviour, IInteractable
 {
+
+    public InteractType Type => InteractType.Zone;
     public ZoneData zoneData;
 
     public void OnPlayerEnter()
     {
         if (zoneData != null)
-            UIManager.Instance.ShowZonePrompt(zoneData.zoneName, zoneData.description);
+            UIManager.Instance.ShowZonePrompt(transform, "E: 상호작용");
     }
 
     public void OnPlayerExit()
