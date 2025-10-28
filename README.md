@@ -28,26 +28,47 @@
 
 ## 📁 폴더 구조
 Assets
+
 └── Scripts
+
 ├── Manager # GameManager, UIManager
+
 ├── Map
+
 │ ├── InteractZone.cs
+
 │ ├── ZoneData.cs
+
 │ └── NPC/ # DialogueData, NPCInteract, TestDialogue
+
 ├── MiniGame
+
 │ ├── IMinigameManager.cs
+
 │ ├── FlappyBird/ # FlappyUI, ObjectPool, Pipe, PipeSpawner
+
 │ └── Manager/ # FlappyBirdManager
+
 ├── Player
+
 │ ├── InteractDetector.cs
+
 │ ├── PlayerAppearance.cs
+
 │ ├── PlayerContext.cs
+
 │ ├── PlayerData.cs
+
 │ ├── PlayerInputController.cs
+
 │ ├── PlayerManager.cs
+
 │ ├── PlayerMovementController.cs
+
 │ └── State/ # IPlayerState, PlayerMainSceneState, FlappyState, PlayerStateMachine
+
 ├── CameraFollow.cs
+
 └── Singleton.cs
 
 ---
