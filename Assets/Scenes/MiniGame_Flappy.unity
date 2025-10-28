@@ -305,7 +305,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Score
 
-    123'
+    0'
 --- !u!222 &239657224
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1081,7 +1081,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Score : 123123'
+  m_Text: 'Score : 0'
 --- !u!222 &1740381910
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1162,7 +1162,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'High Score
 
-    123'
+    0'
 --- !u!222 &1789548521
 CanvasRenderer:
   m_ObjectHideFlags: 0
