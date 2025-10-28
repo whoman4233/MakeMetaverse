@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
@@ -30,8 +31,16 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         mainCamera = Camera.main;
+        mainCamera.GetComponent<CameraFollow>().SetTarget(PlayerManager.Instance.Player.transform);
         zonePromptPanel.gameObject.SetActive(false);
         currentPlayer = PlayerManager.Instance.Player;
+        nextButton.onClick.AddListener(ShowNextLine);
+        SceneManager.sceneLoaded += HandleSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
     }
 
     void Update()
@@ -86,5 +95,23 @@ public class UIManager : Singleton<UIManager>
         speakerText.text = line.speakerName;
         contentText.text = line.content;
         currentIndex++;
+    }
+
+    private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 메인 카메라 다시 찾아서 갱신
+        mainCamera = Camera.main;
+
+        if (mainCamera != null)
+        {
+            Debug.Log($"[UIManager] Reassigned mainCamera: {mainCamera.name}");
+            var camFollow = mainCamera.GetComponent<CameraFollow>();
+            if (camFollow != null && PlayerManager.Instance != null)
+                camFollow.SetTarget(PlayerManager.Instance.Player.transform);
+            if(mainCamera.TryGetComponent<CameraFollow>(out  camFollow))
+            {
+                camFollow.SetTarget(PlayerManager.Instance.Player.transform);
+            }
+        }
     }
 }

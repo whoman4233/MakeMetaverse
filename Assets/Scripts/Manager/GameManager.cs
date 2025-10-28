@@ -22,6 +22,11 @@ public class GameManager : Singleton<GameManager>
         SceneManager.sceneLoaded += HandleSceneLoaded;
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
+    }
+
     void Start()
     {
         // 첫 씬도 강제로 한번 방송 (놓치는 경우 방지)

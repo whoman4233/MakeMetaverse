@@ -8,6 +8,8 @@ public class FlappyUI : MonoBehaviour
     [SerializeField] private Text gameOverScore;
     [SerializeField] private Text highScore;
 
+    private int score;
+
     public void SetScore(int score)
     {
         scoreText.text = $"SCORE: {score}";
@@ -15,6 +17,7 @@ public class FlappyUI : MonoBehaviour
 
     public void ShowGameOver(int finalScore)
     {
+        score = finalScore;
         gameOverPanel.SetActive(true);
         gameOverScore.text = $"SCORE\n{finalScore}";
     }
@@ -27,13 +30,13 @@ public class FlappyUI : MonoBehaviour
 
     public void RetryBtn()
     {
-        GameManager.Instance.LoadScene("MiniGame_Flappy");
+        GameManager.Instance.LaunchMiniGame("MiniGame_Flappy");
         Time.timeScale = 1;
     }
 
     public void StopPlayingBtn()
     {
-        GameManager.Instance.LoadScene("MainScene");
+        GameManager.Instance.EndMiniGame(score);
         Time.timeScale = 1;
     }
 }

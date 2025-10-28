@@ -2,38 +2,33 @@ using UnityEngine;
 
 public class PlayerStateMachine : MonoBehaviour
 {
-    private PlayerManager player;
     private IPlayerState _currentState;
+    private PlayerContext _context;
 
     public void Initialize(PlayerManager manager)
     {
-        player = manager; // FSM이 어떤 오브젝트를 제어할지 연결
+        _context = new PlayerContext(manager.Player);
+        Debug.Log($"[StateMachine] Context initialized with {_context?.Rb}");
     }
 
     public void ChangeState(IPlayerState newState)
     {
+        Debug.Log($"[StateMachine] ChangeState -> {newState.GetType().Name}");
         _currentState?.OnExit();
         _currentState = newState;
-        _currentState?.OnEnter(this);
+        _currentState.OnEnter(this);
     }
+    private void Update() => _currentState?.OnUpdate();
+    private void FixedUpdate() => _currentState?.OnFixedUpdate();
 
-    private void Update()
+    public void OnMove(Vector2 input)
     {
-        _currentState?.OnUpdate();
+        Debug.Log($"[StateMachine] HandleMove -> {input}");
+        if (_currentState == null)
+            Debug.LogError("[StateMachine] currentState is NULL!");
+        _currentState?.OnMove(input);
     }
+    public void OnJump() => _currentState?.OnJump();
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        _currentState?.OnCollisionEnter(collision);
-    }
-
-    public void HandleMove(Vector2 moveInput)
-    {
-        _currentState?.OnMove(moveInput);
-    }
-
-    public void HandleJump()
-    {
-        _currentState?.OnJump();
-    }
+    public PlayerContext Context => _context;
 }

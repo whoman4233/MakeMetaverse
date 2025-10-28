@@ -15,12 +15,13 @@ public class PlayerManager : Singleton<PlayerManager>
     protected override void Awake()
     {
         base.Awake();
-        // 플레이어가 없으면 생성
+
         if (currentPlayerInstance == null)
         {
             currentPlayerInstance = Instantiate(playerPrefab, transform);
             currentPlayerInstance.name = "Player";
         }
+
         fsm = currentPlayerInstance.GetComponent<PlayerStateMachine>();
         fsm.Initialize(this);
         fsm.ChangeState(new PlayerMainSceneState());
@@ -28,6 +29,7 @@ public class PlayerManager : Singleton<PlayerManager>
         GameManager.OnSceneChanged += OnSceneChanged;
         cam.SetTarget(currentPlayerInstance.transform);
     }
+
 
     private void OnDestroy()
     {
@@ -59,7 +61,7 @@ public class PlayerManager : Singleton<PlayerManager>
     private void OnSceneChanged(string sceneName)
     {
         // FSM 교체
-        if (sceneName.Contains("Hub"))
+        if (sceneName.Contains("Main"))
             fsm.ChangeState(new PlayerMainSceneState());
         else if (sceneName.Contains("Flappy"))
             fsm.ChangeState(new FlappyState());
@@ -83,4 +85,5 @@ public class PlayerManager : Singleton<PlayerManager>
     /// </summary>
     public GameObject Player => currentPlayerInstance;
     public Rigidbody2D Rb => currentPlayerInstance.GetComponent<Rigidbody2D>();
+    public Animator anim => currentPlayerInstance.GetComponent<Animator>();
 }

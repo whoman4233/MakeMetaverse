@@ -17,15 +17,17 @@ public class PlayerInputController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 move = context.ReadValue<Vector2>();
+        Debug.Log($"[InputController] Move Input: {move}, Phase: {context.phase}");
+
         if (context.performed || context.canceled)
-            stateMachine.HandleMove(move);
+            stateMachine.OnMove(move);
     }
 
     // InputSystem Event - Jump
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.performed)
-            stateMachine.HandleJump();
+            stateMachine.OnJump();
     }
 
     public void OnInteract(InputAction.CallbackContext context)

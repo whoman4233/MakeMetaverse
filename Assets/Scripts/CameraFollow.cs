@@ -15,6 +15,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
+
         // 씬에 Boarder 오브젝트 있으면 자동 할당
         if (borderTilemap == null)
         {
